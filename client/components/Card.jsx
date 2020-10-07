@@ -5,7 +5,7 @@ const Card = props => {
   return (
     <div className='card'>
       <span>{name}</span>
-      <button onClick={() => props.selectOfficial(name)}> Click Here</button>
+      <button onClick={() => props.selectOfficial(name)}> Add Official</button>
     </div>
   );
 };
