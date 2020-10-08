@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 
-const Card = props => {
+const Official = props => {
   const { name } = props.official;
   return (
     <div className='card'>
@@ -13,4 +13,4 @@ const Card = props => {
   );
 };
 
-export default Card;
+export default Official;
