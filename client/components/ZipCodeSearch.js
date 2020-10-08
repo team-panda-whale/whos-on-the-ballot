@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
+import useOfficials from '../hooks/useOfficials';
+
 const ZipCodeSearch = props => {
   const [zipCode, setZipCode] = useState('');
-
-  const apiKey = 'AIzaSyCLtsQE_ZZgnVpGOaCGFTH26EJ0QH2fPIM';
-
-  const { fetchOfficials } = props;
 
   function handleZipInputChange(e) {
     const { value } = event.target;

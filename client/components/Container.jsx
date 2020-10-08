@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import VoterCard from './VoterCard.jsx';
 import OfficialsContainer from './OfficialsContainer';
 import ZipCodeSearch from './ZipCodeSearch';
@@ -8,11 +7,6 @@ import PhoneInput from './PhoneInput';
 const Container = () => {
   const [officials, setOfficials] = useState([]);
   const [selected, setSelected] = useState([]);
-
-  // useEffect(() => {
-  //   console.log('officials loaded');
-  //   console.log({ officials });
-  // }, officials);
 
   function selectOfficial(name) {
     setSelected([...selected, name]);
@@ -26,26 +20,19 @@ const Container = () => {
     console.log(`${official} removed`);
   }
 
-  // Call to Google Civics API
-  async function fetchOfficials(apiKey, zipCode) {
-    const result = await axios
-      .get(
-        `https://www.googleapis.com/civicinfo/v2/representatives?key=${apiKey}&address=${zipCode}`
-      )
-      .then(res => res.data.officials);
-    setOfficials(result);
-    return result;
-  }
-
   return (
     <div>
-      <ZipCodeSearch fetchOfficials={fetchOfficials} />
+      <ZipCodeSearch setOfficials={setOfficials} />
       <PhoneInput />
       <VoterCard selected={selected} removeOfficial={removeOfficial} />
-      <OfficialsContainer
-        selectOfficial={selectOfficial}
-        officials={officials}
-      />
+      {officials.length ? (
+        <OfficialsContainer
+          selectOfficial={selectOfficial}
+          officials={officials}
+        />
+      ) : (
+        ''
+      )}
     </div>
   );
 };
