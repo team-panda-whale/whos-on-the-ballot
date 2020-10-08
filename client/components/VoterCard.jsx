@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const VoterCard = props => {
   return (
-    <div>
+    <div className='voterCard'>
       <h1>Voter Card</h1>
       <ul>
         {props.selected.map(official => (

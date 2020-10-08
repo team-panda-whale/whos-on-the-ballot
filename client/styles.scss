@@ -150,6 +150,33 @@ $dark-bgd: #555;
   }
 }
 
+.voterCard {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  transition: 500ms;
+  position: relative;
+  border: 1px solid $dark-bgd;
+  border-radius: 5px 0px 5px 5px;
+
+  padding-left: 7px;
+  margin-bottom: 15px;
+
+  height: 200px;
+  width: 75%;
+  box-shadow: 3px 2px 1px 1px darkgrey;
+
+  &:hover {
+    border: 3px solid $dark-bgd;
+    box-shadow: 8px 6px 3px 3px darkgrey;
+  }
+}
+
+.child {
+  display: flex;
+  min-height: 0;
+}
+
 // # card-container {
 //   display: grid;
 //   grid: repeat(2, 60px) / auto-flow 80px;
@@ -248,7 +275,8 @@ $dark-bgd: #555;
   border-color: rgb(9, 62, 91);
 }
 
-.articleLinksContainer {}
+.articleLinksContainer {
+}
 
 .articleLinks {
   color: whitesmoke;
@@ -283,4 +311,37 @@ $dark-bgd: #555;
   // Similar to "invoking" flexCenter "function"
   @include flexCenter();
   //change font size
+}
+
+.photo {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+  height: 75px;
+  width: 60px;
+  padding-right: 1px;
+  padding-top: 1px;
+}
+
+.red-photo-border {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: 2px solid red;
+  height: 75px;
+  width: 60px;
+  // padding-right: 3px;
+  // padding-top: 3px;
+}
+
+.blue-photo-border {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: 2px solid blue;
+  height: 75px;
+  width: 60px;
+  // padding-right: 3px;
+  // padding-top: 3px;
 }
