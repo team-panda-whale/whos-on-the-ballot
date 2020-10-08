@@ -1,23 +1,18 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-async function fetchOfficials(apiKey, zipCode) {
+const getOfficials = async zipCode => {
+  const [officials, setOfficials] = useState([]);
   const apiKey = 'AIzaSyCLtsQE_ZZgnVpGOaCGFTH26EJ0QH2fPIM';
-
-  const result = await axios
+  const { data } = await axios
     .get(
       `https://www.googleapis.com/civicinfo/v2/representatives?key=${apiKey}&address=${zipCode}`
     )
     .then(res => res.data.officials);
+  setOfficials(data);
   return result;
-}
-
-const getOfficials = async () => {
-  const { data } = await useQuery('officials', fetchOfficials, {
-    refetchOnWindowFocus: false,
-  });
 };
 
-export default function useOfficials() {
+export default function useOfficials(zipCode) {
   return useQuery('officials', getOfficials);
 }

@@ -12,8 +12,7 @@ const ZipCodeSearch = props => {
 
   function handleSubmit() {
     event.preventDefault();
-    console.log(fetchOfficials);
-    fetchOfficials(apiKey, zipCode);
+    useOfficials(zipCode);
   }
 
   return (
