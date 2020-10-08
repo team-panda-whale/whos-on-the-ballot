@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
-const axios = require('axios');
-import Card from './Card.jsx';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import VoterCard from './VoterCard.jsx';
-
-const API_KEY = 'AIzaSyCLtsQE_ZZgnVpGOaCGFTH26EJ0QH2fPIM';
+import OfficialsContainer from './OfficialsContainer';
+import ZipCodeSearch from './ZipCodeSearch';
+import PhoneInput from './PhoneInput';
 
 const Container = () => {
+  const [officials, setOfficials] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [phoneNumber, setPhoneNumber] = useState('');
+
+  // useEffect(() => {
+  //   console.log('officials loaded');
+  //   console.log({ officials });
+  // }, officials);
 
   function selectOfficial(name) {
     setSelected([...selected, name]);
@@ -23,81 +27,25 @@ const Container = () => {
   }
 
   // Call to Google Civics API
-  async function fetchOfficials() {
+  async function fetchOfficials(apiKey, zipCode) {
     const result = await axios
       .get(
-        `https://www.googleapis.com/civicinfo/v2/representatives?key=${API_KEY}&address=75078`
+        `https://www.googleapis.com/civicinfo/v2/representatives?key=${apiKey}&address=${zipCode}`
       )
       .then(res => res.data.officials);
+    setOfficials(result);
     return result;
   }
 
-  // Call to Twilio API
-  async function sendSMS(
-    phoneNumber,
-    messageBody = 'hello, this is the default message'
-  ) {
-    const config = {
-      method: 'post',
-      url: `/send-sms`,
-      data: {
-        phoneNumber,
-        messageBody,
-      },
-    };
-    const result = await axios(config).then(res => res.data);
-    return result;
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    sendSMS(phoneNumber, selected);
-    setPhoneNumber('');
-    alert('Message sent! :)');
-  }
-
-  function handleChange(e) {
-    const { value } = event.target;
-    setPhoneNumber(value);
-  }
-
-  const { isLoading, error, data } = useQuery('officials', fetchOfficials, {
-    refetchOnWindowFocus: false,
-  });
-
-  return isLoading ? (
-    '...Loading'
-  ) : error ? (
-    error.message
-  ) : (
+  return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='phoneNumber'>Phone Number</label>
-          <br />
-          <input
-            value={phoneNumber}
-            onChange={handleChange}
-            id='phoneNumber'
-            type='tel'
-          />
-        </div>
-        <button type='submit'>Send SMS</button>
-      </form>
-      <div>
-        <VoterCard selected={selected} removeOfficial={removeOfficial} />
-      </div>
-      <div className='container'>
-        {data.map(official => {
-          return (
-            <Card
-              key={official.name}
-              official={official}
-              selectOfficial={selectOfficial}
-            />
-          );
-        })}
-      </div>
+      <ZipCodeSearch fetchOfficials={fetchOfficials} />
+      <PhoneInput />
+      <VoterCard selected={selected} removeOfficial={removeOfficial} />
+      <OfficialsContainer
+        selectOfficial={selectOfficial}
+        officials={officials}
+      />
     </div>
   );
 };
