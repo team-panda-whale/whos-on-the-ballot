@@ -40,7 +40,7 @@ const Container = () => {
   return (
     <div>
       <ZipCodeSearch fetchOfficials={fetchOfficials} />
-      <PhoneInput />
+      <PhoneInput selected={selected} />
       <VoterCard selected={selected} removeOfficial={removeOfficial} />
       <OfficialsContainer
         selectOfficial={selectOfficial}
