@@ -19,9 +19,9 @@ const Container = () => {
   }
 
   function removeOfficial(official) {
-    const newList = selected.filter(selectedOfficial => {
-      selectedOfficial !== official;
-    });
+    const newList = selected.filter(
+      selectedOfficial => selectedOfficial !== official
+    );
     setSelected(newList);
     console.log(`${official} removed`);
   }
