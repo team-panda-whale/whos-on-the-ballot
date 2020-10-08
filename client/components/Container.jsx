@@ -11,13 +11,17 @@ const Container = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   function selectOfficial(name) {
-    setSelected([...selected, name]);
+    if (!selected.includes(name)) setSelected([...selected, name]);
   }
 
   function removeOfficial(official) {
-    const newList = selected.filter(selectedOfficial => {
-      selectedOfficial !== official;
-    });
+    // Below returns empty array instead array without official argument
+    // const newList = selected.filter(selectedOfficial => {
+    //   selectedOfficial !== official;
+    // });
+    const newList = selected.filter(
+      selectedOfficial => selectedOfficial !== official
+    );
     setSelected(newList);
     console.log(`${official} removed`);
   }
